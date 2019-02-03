@@ -42,14 +42,16 @@ sudoku = [0] * 81
 givens = [False] * 81
 
 # Read Sudoku puzzle into "sudoku"
-with open('sudoku.csv', "rb") as fin:
+with open('sudoku.csv', 'r', newline='') as fin:
     reader = csv.reader(fin)
     sudokuraw = list(reader)
+    print('input puzzle:')
 for r in range(9):
     for c in range(9):
         sudoku[r * 9 + c] = int(sudokuraw[r][c])
         if sudoku[r * 9 + c] != 0:
             givens[r * 9 + c] = True
+    print(sudoku[r * 9:r * 9 + 9])
 
 # The solve loop
 ind = 0
@@ -72,13 +74,14 @@ while ind < 81:
 
 # Output solved puzzle
 solved = [[0, 0, 0, 0, 0, 0, 0, 0, 0]] * 9
-fout = open('sudoku_solved.csv', "wb")
+fout = open('sudoku_solved.csv', 'w')
 writer = csv.writer(fout)
+print('solved puzzle:')
 for r in range(9):
     for c in range(9):
         solved[r][c] = sudoku[r * 9 + c]
     print(solved[r])  # show solution to screen
-    # writer.writerow(solved[r]) # save solution to file
+    writer.writerow(solved[r])  # save solution to file
 
 fin.close()
 fout.close()
